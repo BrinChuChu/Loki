@@ -1,12 +1,10 @@
+import socket, json # connect to server
 
-import socket # connect to server
-
-server_host = "192.168.0.81" # 192.168.0.81
+server_host = "localhost" # 192.168.0.81
 server_port = 4444
-buffer_size = 1024
 
 class Connection:
-    def __init__(self, server_host, server_port,buffer_size=1024):
+    def __init__(self, server_host, server_port):
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # option that allows reuse of socket if disconnected or cuts
         self.connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
@@ -17,15 +15,22 @@ class Connection:
         self.client_socket, client_address = self.connection.accept() # self allows you to use self.connection anywhere in class
         print(f"{client_address[0]}:{client_address[1]} Connected")
     
+    def json_send(self, data):
+        json_data = json.dumps(data).encode()
+        self.client_socket.send(json_data)
+    
+    def json_recieve(self):
+        json_data = self.client_socket.recv(1024).decode()
+        return json.loads(json_data)
+    
     def execute_command(self, command):
         if command.lower() == "exit":
             quit()
-        self.client_socket.send(command.encode())
-        return self.client_socket.recv(buffer_size).decode() # no decode because no encode clientside fix later>?>?
+        self.json_send(command)
+        return self.json_recieve()
     
-    def quit(self,command):
+    def quit(self):
             print("closed connection")
-            #self.client_socket.close()
             self.connection.close()
             
     def run(self):
@@ -34,7 +39,7 @@ class Connection:
             result = self.execute_command(command)
             print(result)
 
-connection = Connection(server_host,server_port,buffer_size)
+connection = Connection(server_host,server_port)
 connection.run()
 
 
