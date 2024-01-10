@@ -1,0 +1,2 @@
+Powershell  -Command "Invoke-WebRequest 'https://i.postimg.cc/52LgsL6Z/IMG-3125.jpg' -OutFile joshy.png"
+joshy.png
