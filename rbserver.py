@@ -46,33 +46,3 @@ class Connection:
 
 connection = Connection(server_host,server_port)
 connection.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# just sending a message, for demonstration purposes
-message = "Hello and Welcome".encode()
-client_socket.send(message)
-"""
-
-
-#connection.close() # close connection
