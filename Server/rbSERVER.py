@@ -64,7 +64,7 @@ class Connection:
                 if command_word[0] == "upload":
                     file_content = self.read_file(command_word[1])
                     command_word.append(file_content)
-                    print(command_word)
+                    #print(command_word) debug
                 
                 result = self.execute_command(command_word)
 
