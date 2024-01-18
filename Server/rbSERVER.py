@@ -1,19 +1,19 @@
 import socket
 import json
 import base64
+import time
 
 class Connection:
     def __init__(self, server_host, server_port):
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # option that allows reuse of socket if disconnected or cuts
-        self.connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
+        self.connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # option that allows reuse of socket if disconnected or cuts
         self.connection.bind((server_host, server_port))
-        # listens and accepts if client attempts to connect
         self.connection.listen(1) # backlog
         print(f"looking for clients as {server_host}:{server_port}")
-        self.client_socket, client_address = self.connection.accept() # self allows you to use self.connection anywhere in class
+
+        self.client_socket, client_address = self.connection.accept() # self allows you to use it anywhere in class
         print(f"{client_address[0]}:{client_address[1]} Connected")
-    
+
     def json_send(self, data):
         json_data = json.dumps(data).encode()
         self.client_socket.send(json_data)
@@ -29,7 +29,7 @@ class Connection:
     
     def execute_command(self, command):
         if command == "exit":
-            quit()
+            quit(self)
         self.json_send(command)
         return self.json_recieve()
     

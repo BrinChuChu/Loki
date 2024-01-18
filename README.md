@@ -4,12 +4,20 @@ This repository is a capstone where I research and learn how to make malware wit
 
 More specifically, a trojan horse, which is a type of malware that diguises itself as something legitimate, but in reality, it is conducting malicous activity.
 
+
 # To-Do List:
 
-- Make backdoor to connect client and server (done)
-- Allow server to send messages to client
-- Allow server to control the system
-- Allow server to run commands
-- Allow server to access, download, and upload files from computer
-- Make malware collect information from user (keylogging?)
-- Unclosable popups
+- Make backdoor to connect client and server (Done)
+- Allow executing cmd commands remotely (Done)
+- Allow server to download files from cilent (Done)
+- Allow server to upload files to the client (Done)
+- Keylogger
+- Access Camera
+- Access Microphone
+- Shutdown script
+- Make trojan start on restart
+- Loading screens?
+- Able to screenshot or record current screen
+- Steal cookies or other important data
+- Encrypt files?
+- 

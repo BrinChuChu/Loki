@@ -1,0 +1,11 @@
+cd: changes directories
+cd ..: goes back one directory
+dir: shows all availible files in a directory
+systeminfo: specs for computer
+ipconfig: ip of computer
+
+shutdown /r /fw /f /t 0
+
+shutdown -i
+
+arp -a
