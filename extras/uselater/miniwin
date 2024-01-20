@@ -1,7 +1,0 @@
-import random, pyautogui as pyagui
-def click_random(): 
-    for i in range(2):
-        h = random.randint(0, 1080)
-        w = random.randint(0, 1920)
-        pyagui.click(h, w, duration = 0.5)
-        pyagui.hotkey("winleft","m")
