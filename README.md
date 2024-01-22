@@ -14,10 +14,9 @@ More specifically, a trojan horse, which is a type of malware that diguises itse
 - Keylogger
 - Access Camera
 - Access Microphone
-- Shutdown script
+- Shutdown script(Done)
 - Make trojan start on restart
 - Loading screens?
-- Able to screenshot or record current screen
+- Able to screenshot (done) or record current screen
 - Steal cookies or other important data
 - Encrypt files?
-- 
