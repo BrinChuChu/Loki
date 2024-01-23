@@ -3,6 +3,7 @@
 This repository is a capstone where I research and learn how to make malware with Python. 
 
 More specifically, a trojan horse, which is a type of malware that diguises itself as something legitimate, but in reality, it is conducting malicous activity.
+This trojan uses sockets, os, and subprocess modules in Python.
 
 
 # To-Do List:
