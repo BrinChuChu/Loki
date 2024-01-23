@@ -17,5 +17,3 @@ Here are some sources I used to learn from and make this project possible
 | [How To Create Trojans Using Powershell](https://www.youtube.com/watch?v=eiT7mslA63c&t=318s) | Teaches you how to package batch files into executables to make them hard to tell from images.|
 | [Writing Malware with Python (Playlist)](https://www.youtube.com/playlist?list=PLUHXnXMY8NDUsV-5WMbsOKJwFM5dDPMMG)| Very helpful video that leads you through the basics of reverse backdoors and remote code execution the playlist was out of order and that caused me great pain. 
 
-https://pyinstaller.org/en/stable/index.html
-
